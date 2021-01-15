@@ -1,0 +1,6 @@
+@charset "UTF-8";
+
+.room{
+	/*Use text-transformation property to capitalize first letter of every word*/
+	text-transform: capitalize;
+}
