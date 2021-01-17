@@ -4,3 +4,17 @@
 	/*Use text-transformation property to capitalize first letter of every word*/
 	text-transform: capitalize;
 }
+
+table{
+	border-spacing: 0 50px;
+}
+td{
+	font-family: 'Open Sans', sans-serif;
+ 
+	 
+}
+th{
+	font-family: 'Lato', sans-serif;
+	font-weight:bold;
+	text-align:center;
+}

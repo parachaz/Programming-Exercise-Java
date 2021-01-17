@@ -1,5 +1,6 @@
 package com.containerstore.whereis.data;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,64 +10,40 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Repository;
 
+import com.containerstore.whereis.domain.ConferenceRoom;
+
 @Repository
 public class ConferenceRoomsDAOImpl implements ConferenceRoomsDAO {
 
+	/*
+	 * select o.id ORDER_ID, o.order_date ORDER_DATE, c.name CUSTOMER_NAME, s.name
+	 * STORE_NAME from orders o, customers c, stores s where o.customer_id=c.id and
+	 * o.pickup_store_id != c.nearest_store_id and o.pickup_store_id = s.id;
+	 * 
+	 * select c.name NAME, c.phone PHONE, COALESCE(l.account,"Not Enrolled")
+	 * LOYALTY_ACCOUNT, COALESCE(l.enroll_date,"") ENROLL_DATE from customers c left
+	 * join loyalty l on c.id = l.customer_id where c.id not in (select customer_id
+	 * from orders);
+	 * 
+	 * select store_number STORE_NUMBER, abbreviation STORE_ABBREVIATION, state
+	 * STATE from stores where id not in ( select nearest_store_id from customers)
+	 * group by state
+	 */
 	private Map<String, String> conferenceRooms;
 
 	@Override
 	public List<String> getAllConferenceRooms() {
-		return conferenceRooms.keySet().stream().sorted().collect(Collectors.toList());
-	}
-
-	public String locationOf1(String query) {
-		String location;
-
-		switch (query.trim().toLowerCase()) {
-		case "":
-			location = "";
-			break;
-		case "perfect product presentation":
-		case "main and main":
-			location = "at the north end of the Information Systems area";
-			break;
-		case "1 great = 3 good":
-		case "intuition does not come to an unprepared mind":
-			location = "off the atrium, behind reception";
-			break;
-		case "gumby":
-			location = "where gumby has always been located...c'mon!";
-			break;
-		case "contain yourself":
-			location = "upstairs, south end, adjacent to CSD";
-			break;
-		case "we love our employees":
-			location = "upstairs, south end, adjacent to CSD (seating area in front of Contain Yourself)";
-			break;
-		case "all eyes on elfa":
-			location = "upstairs, southwest corner";
-			break;
-		case "service = selling":
-		case "fun and functional":
-			location = "upstairs, southwest corner, adjacent to loss prevention";
-			break;
-		case "communication is leadership":
-			location = "upstairs, northwest corner, adjacent to the executive suite";
-			break;
-		case "we sell the hard stuff":
-		case "blue sky":
-			location = "up the stairs, turn right (adjacent to merchandising)";
-			break;
-		default:
-			location = "somewhere, but I don't know where";
-			break;
+		System.out.println("Returing list of  conference rooms");
+		List<String> rooms = conferenceRooms.keySet().stream().sorted().collect(Collectors.toList());
+		for (String room : rooms) {
+			System.out.println(room);
 		}
-
-		return String.format("%s is located %s", query, location);
+		return rooms;
 	}
 
 	@PostConstruct
 	private void buildConferenceRoomsMap() {
+		System.out.println("Building list of  conference rooms");
 		conferenceRooms = new HashMap<>();
 		conferenceRooms.put("fill their baskets", "in the vendor conference area (off of reception)");
 		conferenceRooms.put("service selection price", "in the vendor conference area (off of reception)");
@@ -94,6 +71,16 @@ public class ConferenceRoomsDAOImpl implements ConferenceRoomsDAO {
 	public String getLocationOf(String roomName) {
 		return String.format("%s is located %s", roomName,
 				conferenceRooms.getOrDefault(roomName, "somewhere, but I don't know where"));
+	}
+
+	@Override
+	public List<ConferenceRoom> getConferenceRoomsDetails() {
+
+		List<ConferenceRoom> roomsLocation = new ArrayList<>();
+		conferenceRooms.keySet().stream().forEach(room -> {
+			roomsLocation.add(new ConferenceRoom(room, conferenceRooms.get(room)));
+		});
+		return roomsLocation;
 	}
 
 }

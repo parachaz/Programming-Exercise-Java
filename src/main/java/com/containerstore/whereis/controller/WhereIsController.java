@@ -36,6 +36,12 @@ public class WhereIsController {
 		return "conferenceRoomsList";
 	}
 
+	@GetMapping("/conference_rooms")
+	public String getConferenceRoomsWithLocation(Model model) {
+		model.addAttribute("roomsDetails", conferenceRooms.conferenceRoomsDetails());
+		return "conferenceRoomsDetails";
+	}
+
 	@PostMapping("/")
 	public String submitForm(Model model, @ModelAttribute WhereIsViewModel viewModel) {
 

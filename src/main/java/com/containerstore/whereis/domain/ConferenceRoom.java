@@ -9,7 +9,6 @@ package com.containerstore.whereis.domain;
 public class ConferenceRoom {
 	String name;
 	String location;
-	int capacity;
 
 	public ConferenceRoom(String name, String location) {
 		super();
@@ -44,20 +43,6 @@ public class ConferenceRoom {
 	 */
 	public void setLocation(String location) {
 		this.location = location;
-	}
-
-	/**
-	 * @return the capacity
-	 */
-	public int getCapacity() {
-		return capacity;
-	}
-
-	/**
-	 * @param capacity the capacity to set
-	 */
-	public void setCapacity(int capacity) {
-		this.capacity = capacity;
 	}
 
 }

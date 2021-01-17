@@ -22,4 +22,9 @@ public class ConferenceRoomsImpl implements ConferenceRooms {
 		return conferenceRoomsDAO.getAllConferenceRooms();
 	}
 
+	@Override
+	public List<ConferenceRoom> conferenceRoomsDetails() {
+		return conferenceRoomsDAO.getConferenceRoomsDetails();
+	}
+
 }

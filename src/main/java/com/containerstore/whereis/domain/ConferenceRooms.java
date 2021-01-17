@@ -6,4 +6,6 @@ public interface ConferenceRooms {
 	String locationOf(String query);
 
 	List<String> conferenceRoomsList();
+
+	List<ConferenceRoom> conferenceRoomsDetails();
 }
