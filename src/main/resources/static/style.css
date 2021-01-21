@@ -4,17 +4,27 @@
 	/*Use text-transformation property to capitalize first letter of every word*/
 	text-transform: capitalize;
 }
-
+body{
+	font-family: 'Open Sans', sans-serif;
+	line-height:2.0rem;
+	 
+}
 table{
 	border-spacing: 0 50px;
 }
-td{
-	font-family: 'Open Sans', sans-serif;
  
-	 
-}
-th{
+  th{
 	font-family: 'Lato', sans-serif;
 	font-weight:bold;
 	text-align:center;
+}
+h1 {
+	padding: 5rem 0 1.5rem;
+	font-family: 'Lato', sans-serif;
+	font-weight:bold;
+}
+li{
+	/*Removes the bullets*/
+	list-style-type:square;
+	 
 }

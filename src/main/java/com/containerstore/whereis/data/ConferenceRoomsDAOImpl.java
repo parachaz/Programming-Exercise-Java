@@ -8,42 +8,48 @@ import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
 
 import com.containerstore.whereis.domain.ConferenceRoom;
 
+/**
+ * This class mocks implementation of repository object. In a real-world
+ * application the class will retrieve data from a database. In this mock
+ * implementation we have hard-coded the data. The data is stored in a Map, that
+ * facilitates the lookup of a conference room by its name.
+ * 
+ * @author Zaheer
+ *
+ */
 @Repository
 public class ConferenceRoomsDAOImpl implements ConferenceRoomsDAO {
 
-	/*
-	 * select o.id ORDER_ID, o.order_date ORDER_DATE, c.name CUSTOMER_NAME, s.name
-	 * STORE_NAME from orders o, customers c, stores s where o.customer_id=c.id and
-	 * o.pickup_store_id != c.nearest_store_id and o.pickup_store_id = s.id;
-	 * 
-	 * select c.name NAME, c.phone PHONE, COALESCE(l.account,"Not Enrolled")
-	 * LOYALTY_ACCOUNT, COALESCE(l.enroll_date,"") ENROLL_DATE from customers c left
-	 * join loyalty l on c.id = l.customer_id where c.id not in (select customer_id
-	 * from orders);
-	 * 
-	 * select store_number STORE_NUMBER, abbreviation STORE_ABBREVIATION, state
-	 * STATE from stores where id not in ( select nearest_store_id from customers)
-	 * group by state
+	/**
+	 * Map to hold conference rooms and their locations
 	 */
 	private Map<String, String> conferenceRooms;
+	private Log logger = LogFactory.getLog(ConferenceRoomsDAOImpl.class);
 
 	@Override
 	public List<String> getAllConferenceRooms() {
-		System.out.println("Returing list of  conference rooms");
+
+		logger.debug("Returing list of conference rooms");
 		List<String> rooms = conferenceRooms.keySet().stream().sorted().collect(Collectors.toList());
+		// list all rooms for debugging purposes
 		for (String room : rooms) {
-			System.out.println(room);
+			logger.debug(room);
 		}
 		return rooms;
 	}
 
+	/**
+	 * Populate the map with conference rooms details. This is our data store.
+	 */
 	@PostConstruct
 	private void buildConferenceRoomsMap() {
-		System.out.println("Building list of  conference rooms");
+		logger.debug("Building list of  conference rooms");
 		conferenceRooms = new HashMap<>();
 		conferenceRooms.put("fill their baskets", "in the vendor conference area (off of reception)");
 		conferenceRooms.put("service selection price", "in the vendor conference area (off of reception)");
@@ -75,11 +81,13 @@ public class ConferenceRoomsDAOImpl implements ConferenceRoomsDAO {
 
 	@Override
 	public List<ConferenceRoom> getConferenceRoomsDetails() {
-
+		logger.debug("Get conference rooms details");
 		List<ConferenceRoom> roomsLocation = new ArrayList<>();
+		// Build a list of conference rooms from conferenceRooms map.
 		conferenceRooms.keySet().stream().forEach(room -> {
 			roomsLocation.add(new ConferenceRoom(room, conferenceRooms.get(room)));
 		});
+		logger.debug("Returning list of " + roomsLocation.size() + " rooms.");
 		return roomsLocation;
 	}
 

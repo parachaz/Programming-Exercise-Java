@@ -1,7 +1,7 @@
 package com.containerstore.whereis.domain;
 
 /**
- * Java object to represent a conference room *
+ * Java object to represent a conference room
  * 
  * @author Zaheer
  *
