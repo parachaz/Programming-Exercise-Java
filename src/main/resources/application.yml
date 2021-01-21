@@ -1,0 +1,56 @@
+#configure application specific properties
+ 
+logging:
+  level:
+    com:
+      containerstore: debug
+    org:  
+      springframework: error
+      apache: error
+      
+  pattern:
+    console:  "%yellow(%d{dd-MM-yyyy HH:mm:ss.SSS}) %magenta([%thread]) %highlight(%-5level) %green(%logger.%M) - %msg%n"
+    file: "[%d{dd-MM-yyyy HH:mm:ss.SSS}] [%thread] [%-5level] [%logger.%M] - %msg%n"
+  
+ 
+
+
+#configurations for prodcution env.
+---
+spring:
+  profiles: production
+    
+
+logging:
+  level:
+    com:
+      containerstore: warn
+  pattern:
+    console:  "%boldYellow(%d{dd-MM-yyyy HH:mm:ss.SSS}) %green([%logger.%M])- %magenta(%msg%n)"
+    
+ 
+ 
+#configurations for test env.
+---
+spring:
+  profiles: test
+
+logging:
+  level:
+    com:
+      containerstore: info
+  pattern:
+    console:  "%blue(%d{dd-MM-yyyy HH:mm:ss.SSS}) %green([%logger.%M])- %magenta(%msg%n)"
+     
+#configurations for dev env.
+---
+spring:
+  profiles: dev
+ 
+logging:
+  level:
+    com:
+      containerstore: debug
+  pattern:
+    console:  "%blue(%d{dd-MM-yyyy HH:mm:ss.SSS}) %green([%logger.%M])- %magenta(%msg%n)"
+    
